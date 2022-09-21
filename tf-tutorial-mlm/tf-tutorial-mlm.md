@@ -147,6 +147,13 @@ Model is appropriate for tabular data, that is data as it looks in a table or sp
  one row for each variable.
 
  Three predictive modeling problems you may want to explore with an MLP:
-- binary classification
+- [binary classification](#binary-classification)
 - multiclass classification
 - regression
+
+#### Binary Classification.
+We will use the Ionosphere binary (two-class) classification dataset to demonstrate an MLP for binary classification.
+
+This dataset involves predicting whether a structure is in the atmosphere or not, given radar returns.
+
+
