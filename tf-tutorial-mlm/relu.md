@@ -1,3 +1,5 @@
-An Introduction to RELU via [this tutorial](https://machinelearningmastery.com/rectified-linear-activation-function-for-deep-learning-neural-networks/).
+# An Introduction to RELU via [this tutorial](https://machinelearningmastery.com/rectified-linear-activation-function-for-deep-learning-neural-networks/).
 
-In a neural network, the activation function is responsible for transforming the summed weighted input from the node into the activation of the node or output for that input.
+In a neural network, the activation function is responsible for transforming the summed weighted input from the node into the activation of the node or output for that input. The function defines the output of that node given an input or a set of inputs. A standard integrated circuit can be seen as a digitial network of activation functions that can be 0 or 1 depending on input.
+
+A rectified linear activation function (RELU) is a short piecewise linear function that will output the input directly if positive, otherwise it will output zero. It has become the default activation function for many types of neural networks because a model that uses it to train often achieves better performance.
