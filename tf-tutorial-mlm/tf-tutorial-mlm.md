@@ -156,4 +156,12 @@ We will use the Ionosphere binary (two-class) classification dataset to demonstr
 
 This dataset involves predicting whether a structure is in the atmosphere or not, given radar returns.
 
+This will be [our dataset](https://raw.githubusercontent.com/jbrownlee/Datasets/master/ionosphere.csv), and [this](https://raw.githubusercontent.com/jbrownlee/Datasets/master/ionosphere.names) is it's description.
 
+We use [Label Encoder](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.LabelEncoder.html) to encode string values into 0 and 1, fitting the model on 67% of our data, using 33% for evaluation.
+
+It is good practice to use ‘relu‘ activation with a ‘he_normal‘ weight initialization. This combination goes a long way in overcoming the problem of vanishing gradients when training deep neural network models.
+
+More on RELU [here](https://machinelearningmastery.com/rectified-linear-activation-function-for-deep-learning-neural-networks/).
+
+The model predicts the probability of class 1 and uses the sigmoid activation function. The model is optimized using the [adam version](https://machinelearningmastery.com/adam-optimization-algorithm-for-deep-learning/) of stochastic gradient descent and seeks to minimize the [cross-entropy loss](https://machinelearningmastery.com/cross-entropy-for-machine-learning/).
