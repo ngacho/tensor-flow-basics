@@ -25,8 +25,36 @@ Nonlinear activation functions are preferred as they allow the nodes to learn mo
 
 The sigmoid activation function, also called the logistic functon, is a popular activation function for neural networks. The input to the function is transformed into a value between 0.0 and 1.0. Inputs that are much larger than 1.0 are transformed to 1, similarly values much smaller than 0 are snapped to 0. The shape of the function for all possible inputs is an S-shape from zero up through 0.5 to 1.0.
 
-### THe hyperbolic tangent function
+![Sigmoid Activation function sample](https://upload.wikimedia.org/wikipedia/commons/8/88/Logistic-curve.svg)
+### The hyperbolic tangent function
 
-The sigmoid activation function, also called the logistic function, is a similar shaped nonlinear activation function that outputs values between -1.0 and 1.0.
+The sigmoid activation function, also called the logistic function, is a similar shaped nonlinear activation function that outputs values between -1.0 and 1.0. It has a higher range when compared to the sigmoid activation function.
+
+![Hyperbolic tangent activation function](https://i.stack.imgur.com/vxfdW.png)
 
 ### Limitations of Sigmoid and Tanh Activation Functions.
+A general problem with the sigmoid and tanh functions is that they saturate. This means that large values snap to 1, and small values snap to -1 hyperbolic tangnet functions and 0 for sigmoid functions respectively. 
+
+Furthermore, the functions aare only really sensitive to changes around the mid-point of their input, 0.5 for sigmoid, and 0.0 for hyperbolic tangent functions.
+
+Limited sensitivity and saturation happen regardless of whether the summed activation from node provided as input contains useful information or not. Once saturated, it becomes challenging for the learning algorithm to continue to adapt the weights to improve performance of the model.
+
+
+**The vanishing gradient problem**
+Vanishing gradient problem mostly occurs during the backpropagation when the value of the weights are changed.
+
+Neural networks are trained using a stochastic gradient descent. This involves first calculating the prediction error made by the model, and using the error to estimate a gradient used to update each weight in the network so that less error is made next time. This error gradient is propagated backward through network from the output layer to the input layer.
+
+It's desirable to train neural networks with many layers as the addition of more layers increases the capacity of the network, making it capable of learning a large training dataset and efficiently representing more complex mapping functions from inputs to outputs.
+
+A problem with training networks with many layers is that the gradient diminishes dramatically as it is propagated backward through the network. The error may be so small by the time it reaches layers close to the input of the model it may have very little effect hence the __vanishing gradient problem__
+
+Layers deep in large networks using this nonlinear activation functions fail to receive useful gradient information. Error is back propagated through the network and used to update the weights. The amount of error decreases dramatically with each additional layer through which it is propagated, given the derivative of the chosen activation function.
+
+For the sigmoid function, the range is 0 to 1. We know that the maximum threshold value is 1, and the minimum value is 0. So when we increase the input values, the predicted output must lie near to the upper threshold value which is 1.
+
+When neuron outputs are very small, the patterns created during optimization will be smaller and smaller towards the upper layers, making the learning process very slow, and make them converge to their optimum.
+
+The vanishing gradient problem may be manifest in a Multilayer Perceptron by a slow rate of improvement of a model during training and perhaps premature convergence-continued training does not result in further improvement.
+
+### Rectified Linear Activation Function.
