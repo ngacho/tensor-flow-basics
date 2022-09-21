@@ -92,4 +92,75 @@ Get new data for which prediction is required.
 
 Call function to make a prediction of class label, probability or numerical values.
 
+    ```
+        yhat = model.predict(X)        
+    ```
+
+"""
+
+
+# Main ways to use tf.keras api to build models: sequential and functional.
+"""
+    - sequential model api (simple)
+    - functional model api (advanced)
+"""
+
+# Sequential model api.
+"""
+Called sequential because it involves defining a sequential class and adding layers
+ one by one in a linear manner, from input to output.
+
+Using keras:
+    ```
+        This model defines a sequential MLP model that accepts eight input, 
+         has one hidden layer with 10 nodes, then an output layer with
+         with one node to predict a numerical value.
+
+        # define model
+        model = Sequential()
+        Input shape defines the visible layer of the network.
+        Model expects input for one sample to be a vector of eight numbers.
+        model.add(Dense(10, input_shape=(8,)))
+        model.add(Dense(1))
+    ```
+
+"""
+
+# Functional Model API.
+"""
+Involves explicitly connecting the output of one layer to the input of another
+Each connection is specified.
+
+An input layer must be defined via the input class,
+ shape of an input sample is specified.
+ we retain a reference to the input layer when defining the model.
+ 
+
+     ```
+        # define a layer
+        x_in = Input(shape=(8,))
+    ```
+
+A fully connected layer can be connected to the input 
+
+    ```
+        x = Dense(10)(x_in)
+    ```
+
+Then connect to an output layer
+
+    ```
+        x_out = Dense(1)(x)    
+    ```
+
+A complete example
+    ```
+        # define the layers
+        x_in = Input(shape=(8,))
+        x = Dense(10)(x_in)
+        x_out = Dense(1)(x)
+        # define the model
+        model = Model(inputs=x_in, outputs=x_out)
+    ```
+
 """
