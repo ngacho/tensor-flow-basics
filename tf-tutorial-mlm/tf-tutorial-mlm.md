@@ -162,6 +162,6 @@ We use [Label Encoder](https://scikit-learn.org/stable/modules/generated/sklearn
 
 It is good practice to use ‘relu‘ activation with a ‘he_normal‘ weight initialization. This combination goes a long way in overcoming the problem of vanishing gradients when training deep neural network models.
 
-More on RELU<sup>[[1](https://machinelearningmastery.com/rectified-linear-activation-function-for-deep-learning-neural-networks/), [2]()]</sup>
+More on RELU<sup>[[1](https://machinelearningmastery.com/rectified-linear-activation-function-for-deep-learning-neural-networks/), [2](https://github.com/ngacho/tensor-flow-basics/blob/main/tf-tutorial-mlm/relu.md)]</sup>
 
 The model predicts the probability of class 1 and uses the sigmoid activation function. The model is optimized using the [adam version](https://machinelearningmastery.com/adam-optimization-algorithm-for-deep-learning/) of stochastic gradient descent and seeks to minimize the [cross-entropy loss](https://machinelearningmastery.com/cross-entropy-for-machine-learning/).
