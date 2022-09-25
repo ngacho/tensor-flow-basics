@@ -1,6 +1,7 @@
 # This code is for building a neural network with backpropagation in python.
 from random import random
 from random import seed
+from math import exp
 
 # initialize network
 def initialize_network(n_inputs, n_hidden, n_outputs):
@@ -20,10 +21,24 @@ def activate(weights, inputs):
         activation += weights[i] * inputs[i]
     return activation
 
+# sigmoid transfer function
 def transfer_sigmoid(activation):
     return 1.0 / (1.0 + exp(-activation))
 
+# relu transfer functions.
 def transfer_relu(activation):
     return max(0.0, activation)
+
+# forward propagate input to a network output
+def forward_propagate(network, row):
+    inputs = row
+    for layer in network:
+        new_inputs = []
+        for neuron in layer:
+            activation = activate(neuron['weights'], inputs)
+            neurn[output] = transfer_sigmoid(activation)
+            new_inputs.append(neuron['output'])
+        inputs = new_inputs
+    return inputs
 
 
