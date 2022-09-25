@@ -1,3 +1,4 @@
+# This code is for building a neural network with backpropagation in python.
 from random import random
 from random import seed
 
