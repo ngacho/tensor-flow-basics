@@ -49,8 +49,8 @@ We can calculate an ouput from a neural network by propagating an input signal t
 It is the technique we will need to generate predictions during training that will need to be corrected, and it is the method we will need after the network is trained to make predictions on new data.
 
 We can break forward propagation down into three parts.
-1. Neuron Activation
-2. Neuron Transfer
+1. [Neuron Activation](#neuron-activation)
+2. [Neuron Transfer](#neuron-transfer)
 3. Forward Propagation
 
 #### Neuron Activation.
@@ -71,7 +71,7 @@ Where **weight** is a network weight, **input** is an input, **i** is the index 
 #### Neuron Transfer
 Once a neuron is activated, we need to transfer the activation to see what the neuron output actually is. Different transfer functions can be used. It's traditional to use the sigmoid activation function or tanh function to transfer outputs. More recently, the rectifier transfer function has been popular with large deep learning networks.
 
-We will define a [sigmoid](https://github.com/ngacho/tensor-flow-basics/blob/02c908c149324c2b2c83563453207b4585ec4d77/tf-tutorial-mlm/code_samples/backprop_neural_net.py#L23) and a [rectified linear activation function](https://github.com/ngacho/tensor-flow-basics/blob/02c908c149324c2b2c83563453207b4585ec4d77/tf-tutorial-mlm/code_samples/backprop_neural_net.py#L23) for transfer and compare outcomes.
+We will define a [sigmoid](https://github.com/ngacho/tensor-flow-basics/blob/02c908c149324c2b2c83563453207b4585ec4d77/tf-tutorial-mlm/code_samples/backprop_neural_net.py#L23) and a [rectified linear activation function](https://github.com/ngacho/tensor-flow-basics/blob/02c908c149324c2b2c83563453207b4585ec4d77/tf-tutorial-mlm/code_samples/backprop_neural_net.py#L26) for transfer and compare outcomes.
 
 
 #### Forward propagation.
