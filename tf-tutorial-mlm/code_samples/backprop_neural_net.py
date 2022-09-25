@@ -16,8 +16,14 @@ def initialize_network(n_inputs, n_hidden, n_outputs):
 # calculate neuron activation for an input
 def activate(weights, inputs):
     activation = weights[-1]
-    for(i in range(len(weights)-1)):
+    for i in range(len(weights)-1):
         activation += weights[i] * inputs[i]
-    return activation.
+    return activation
+
+def transfer_sigmoid(activation):
+    return 1.0 / (1.0 + exp(-activation))
+
+def transfer_relu(activation):
+    return max(0.0, activation)
 
 
