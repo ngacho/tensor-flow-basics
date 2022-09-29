@@ -16,9 +16,15 @@ def initialize_network(n_inputs, n_hidden, n_outputs):
 
 # calculate neuron activation for an input
 def activate(weights, inputs):
+    # activation = sum(weight_i * input_i) + bias
+    # get the last element 
     activation = weights[-1]
+    # loop up to the second last element (range loops [0,len(weights)-1))
     for i in range(len(weights)-1):
+        
         activation += weights[i] * inputs[i]
+
+    print(activation)
     return activation
 
 # sigmoid transfer function
@@ -32,13 +38,33 @@ def transfer_relu(activation):
 # forward propagate input to a network output
 def forward_propagate(network, row):
     inputs = row
+    # work through each layer in our network.
     for layer in network:
+        # new inputs for that layer.
         new_inputs = []
+        # get each neuron in layer.
         for neuron in layer:
+            # calculate activation
             activation = activate(neuron['weights'], inputs)
-            neurn[output] = transfer_sigmoid(activation)
+            # transfer function
+            neuron['output'] = transfer_relu(activation)
+            # the ouput
             new_inputs.append(neuron['output'])
         inputs = new_inputs
     return inputs
+
+# test forward propagation
+network = [
+            [
+                {'weights': [0.13436424411240122, 0.8474337369372327, 0.763774618976614]} # hidden layer with 2 weights and bias
+            ],
+		    [
+                {'weights': [0.2550690257394217, 0.49543508709194095]},                   # output layer 1 with one weight and bias.
+                {'weights': [0.4494910647887381, 0.651592972722763]}                      # output layer 2 with one weight and bias.
+            ]
+        ]
+
+row = [1, 0, None]
+output = forward_propagate(network, row)
 
 
