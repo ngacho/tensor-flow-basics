@@ -17,11 +17,14 @@ def initialize_network(n_inputs, n_hidden, n_outputs):
 # calculate neuron activation for an input
 def activate(weights, inputs):
     # activation = sum(weight_i * input_i) + bias
-    # get the last element 
+    # get the last element (bias) 
     activation = weights[-1]
+
     # loop up to the second last element (range loops [0,len(weights)-1))
     for i in range(len(weights)-1):
-        
+        print("weight ", weights[i])
+
+        # print( multiplying " + str(weights[i]) + " by " + str(inputs[i]))
         activation += weights[i] * inputs[i]
 
     print(activation)
@@ -56,7 +59,7 @@ def forward_propagate(network, row):
 # test forward propagation
 network = [
             [
-                {'weights': [0.13436424411240122, 0.8474337369372327, 0.763774618976614]} # hidden layer with 2 weights and bias
+                {'weights': [0.13436424411240122, 0.8474337369372327, 0.763774618976614]},  # hidden layer with 2 weights and bias
             ],
 		    [
                 {'weights': [0.2550690257394217, 0.49543508709194095]},                   # output layer 1 with one weight and bias.
@@ -64,7 +67,8 @@ network = [
             ]
         ]
 
-row = [1, 0, None]
+row = [1, 0]
 output = forward_propagate(network, row)
+print(output)
 
 
