@@ -51,7 +51,7 @@ It is the technique we will need to generate predictions during training that wi
 We can break forward propagation down into three parts.
 1. [Neuron Activation](#neuron-activation)
 2. [Neuron Transfer](#neuron-transfer)
-3. Forward Propagation
+3. [Forward Propagation](#forward-propagation)
 
 #### Neuron Activation.
 The first step is to calculate the activation of one neuron given an input.
@@ -64,7 +64,9 @@ Neuron activation is calculated as the weighted sum of the inputs.
 activation = sum(weight_i * input_i) + bias
 ```
 
-Where **weight** is a network weight, **input** is an input, **i** is the index of a weight or an input and **bias** is a special weight that has no input to multiply with (or you can think of the input as always being 1.0)
+Where **weight** is a network weight, **input** is an input, **i** is the index of a weight or an input and **bias** is a special weight that has no input to multiply with (or you can think of the input as always being 1.0).
+
+![Here is a sample of the multiplication of neural networks](https://www.jeremyjordan.me/content/images/2018/01/Screen-Shot-2017-11-07-at-12.32.19-PM.png)
 
 [sample activation function](https://github.com/ngacho/tensor-flow-basics/blob/501ff68c6dda2616c2b5eac711432b85184a81bc/tf-tutorial-mlm/code_samples/backprop_neural_net.py#L17)
 
@@ -77,4 +79,53 @@ We will define a [sigmoid](https://github.com/ngacho/tensor-flow-basics/blob/02c
 #### Forward propagation.
 Forward propagating an input is straight forward. We work through each layer of our network calculating the outputs for each neuron. All of the outputs from one layer become inputs to the neurons on the next layer.
 
+The code sample can be found [here](https://github.com/ngacho/tensor-flow-basics/blob/aa175a02d41c6034aaf9ab2650263e1e2b961705/tf-tutorial-mlm/code_samples/backprop_neural_net.py#L39)
+
+## Back Propagate Error.
+Backpropagation algorithm is named for the way in which weights are trained.
+
+Error is calculated between the expected outputs and the outputs forward propagated from the network. These errors are then propagated backward through the network from the output layer to the hidden layer, assigning blame for errors and updating the weights as they go.
+
+Two sections to achieve backpropagation
+1. [Transfer Derivative](#transfer-derivative)
+2. [Error Backpropagation](#error-backpropagation)
+
+### Transfer Derivative
+Given an output value from a neuron, we need to calculate it's slope.
+
+With the sigmoid transfer function, the derivative is given by
+```
+derivative = return output * (1.0 - output)
+```
+
+For a ReLU, the derivative is given by
+```
+derivative = if output < 0:
+                return 0
+            else if output > 0
+                return 1
+            else 
+                return undefined
+```
+
+### Error Backpropagation
+The first step is to calculate the error for each output neuron, this will give us our error signal (input) to propagate it backwards through the network.
+
+Error for a given neuron can be calculated as:
+```
+error = (output - expected) * derivative(output)
+```
+
+Where expected is the expected output value for the neuron, output is the output value for the neuron and derivative calculates the slope of the neuron's output value, as shown above.
+
+The error calculation is used for neurons in the output layer. The expected value is the class value itself. In the hidden layer, things are a little more complicated.
+
+The error signal for a neuron in the hidden layer is calculated as the weighted error of each neuron in the output layer. Think of the error traveling back along the weights of the output layer to the neurons in the hidden layer.
+
+The back-propagated error signal is accumulated and then used to determine the error for the neuron in the hidden layer, as follows:
+```
+error = (weight_k * error_j) * derivative(output)
+```
+
+Where error_j is the error signal from the jth neuron in the output layer, weight_k is the weight that connects the kth neuron to the current neuron and output is the output for the current neuron.
 
