@@ -129,3 +129,40 @@ error = (weight_k * error_j) * derivative(output)
 
 Where error_j is the error signal from the jth neuron in the output layer, weight_k is the weight that connects the kth neuron to the current neuron and output is the output for the current neuron.
 
+Here is a function _backward\_propagate\_error()_ that implements this procedure.
+
+```
+def backward_propagate_error(network, expected):
+    for i in reversed(range(len(network))):
+        layer = network[i]
+        errors = list()
+        # if it's not the last element.
+        if i != len(network) - 1:
+            for j in range(len(layer)):
+                # for each layer
+                error = 0.0
+                for neuron in network[i+1]:
+                    print()
+                    # for each neuron in the next layer (we call it x[j]).
+                    # get the weight for the neuron of the preceding layer (y[j]), 
+                    # multiply it by it by delta of neuron in the next layer, and add for all errors.
+                    error += (neuron['weights'][j] * neuron['delta'])
+                # append the error for neuron x[j] in our layer.
+                errors.append(error)
+        else:
+            # get the output layer first
+            for j in range(len(layer)):
+                # for each neuron in the output layer, 
+                # calculate the difference between the values of that output and the expected and place in a list.
+                neuron = layer[j]
+                # append the errors to a list.
+                errors.append(neuron['output'] - expected[j])
+                
+        for j in range(len(layer)):
+            neuron = layer[j]
+            # for each neuron in the
+            # add a delta (expected-output) * derivative(output) component to the neuron
+            neuron['delta'] = errors[j] * \
+                transfer_relu_derivative(neuron['output'])
+```
+
