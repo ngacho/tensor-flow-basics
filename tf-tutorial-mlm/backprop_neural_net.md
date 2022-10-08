@@ -89,10 +89,10 @@ In the hidden layer, we'll define weights for each input in the input layer and 
 
 
 The output of neuron a will thus be:<br>
-O<sub>a</sub> = `transfer_fun`(I<sub>1</sub>·<sub>a</sub>W<sub>1</sub> + I<sub>2</sub>·<sub>a</sub>W<sub>2</sub> + B<sub>a</sub>)<br>
+&emsp;&emsp;&emsp;O<sub>a</sub> = `transfer_fun`(I<sub>1</sub>·<sub>a</sub>W<sub>1</sub> + I<sub>2</sub>·<sub>a</sub>W<sub>2</sub> + B<sub>a</sub>)<br>
 Similarly, the output for neuron b will be:
 
-O<sub>b</sub> = `transfer_fun`(I<sub>1</sub>·<sub>b</sub>W<sub>1</sub> + I<sub>2</sub>·<sub>b</sub>W<sub>2</sub> + B<sub>b</sub>)
+&emsp;&emsp;&emsp;O<sub>b</sub> = `transfer_fun`(I<sub>1</sub>·<sub>b</sub>W<sub>1</sub> + I<sub>2</sub>·<sub>b</sub>W<sub>2</sub> + B<sub>b</sub>)
 
 
 The code sample can be found [here](https://github.com/ngacho/tensor-flow-basics/blob/aa175a02d41c6034aaf9ab2650263e1e2b961705/tf-tutorial-mlm/code_samples/backprop_neural_net.py#L39)
@@ -205,19 +205,19 @@ We need to calculate ∆<sub>x</sub>, ∆<sub>y</sub>, ∆<sub>1</sub>, ∆<sub>
 For the output layer, we'll define a bit more:<br>
 Neuron x has <sub>x</sub>W<sub>1</sub>, <sub>x</sub>W<sub>2</sub>, b<sub>x</sub> as the weights for neuron 1 and 2 from the second last layer, with an additional bias term. It also has an output O<sub>x</sub>, and and expected value E<sub>x</sub>. We calculate ∆<sub>x</sub> as follows:
 
-∆<sub>x</sub> = (E<sub>x</sub> - O<sub>x</sub>) · `transfer_derivative`(O<sub>x</sub>)
+&emsp;&emsp;&emsp;∆<sub>x</sub> = (E<sub>x</sub> - O<sub>x</sub>) · `transfer_derivative`(O<sub>x</sub>)
 
 Neuron y has <sub>y</sub>W<sub>1</sub>, <sub>y</sub>W<sub>2</sub>, b<sub>y</sub> as the weights for neuron 1 and 2 from the second last layer, with an additional bias term. Like neuron x, it also has an output O<sub>y</sub>, and and expected value E<sub>y</sub>. Similarly, we calculate ∆<sub>y</sub> as follows:
 
-∆<sub>y</sub> = (E<sub>y</sub> - O<sub>y</sub>) · `transfer_derivative`(O<sub>y</sub>)
+&emsp;&emsp;&emsp;∆<sub>y</sub> = (E<sub>y</sub> - O<sub>y</sub>) · `transfer_derivative`(O<sub>y</sub>)
 
 To calculate the ∆ for each neuron in the second to last layer,
 
-∆<sub>1</sub> = (∆<sub>x</sub> · <sub>x</sub>W<sub>1</sub> + ∆<sub>y</sub> · <sub>y</sub>W<sub>1</sub>) · `transfer_derivative`(O<sub>1</sub>)
+&emsp;&emsp;&emsp;∆<sub>1</sub> = (∆<sub>x</sub> · <sub>x</sub>W<sub>1</sub> + ∆<sub>y</sub> · <sub>y</sub>W<sub>1</sub>) · `transfer_derivative`(O<sub>1</sub>)
 
 and 
 
-∆<sub>2</sub> = (∆<sub>x</sub> · <sub>x</sub>W<sub>2</sub> + ∆<sub>y</sub> · <sub>y</sub>W<sub>2</sub>) · `transfer_derivative`(O<sub>2</sub>)
+&emsp;&emsp;&emsp;∆<sub>2</sub> = (∆<sub>x</sub> · <sub>x</sub>W<sub>2</sub> + ∆<sub>y</sub> · <sub>y</sub>W<sub>2</sub>) · `transfer_derivative`(O<sub>2</sub>)
 
 This procedure goes on backwards until we calculate a delta for each neuron in each hidden layer.
 
