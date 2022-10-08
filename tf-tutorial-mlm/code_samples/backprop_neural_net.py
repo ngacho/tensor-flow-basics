@@ -27,14 +27,9 @@ def activate(weights, inputs):
 
     # loop up to the second last element (range loops [0,len(weights)-1))
     for i in range(len(weights)-1):
-        print("inputs ", i)
-        print("weight ", weights[i])
-        
-
         # print( multiplying " + str(weights[i]) + " by " + str(inputs[i]))
         activation += weights[i] * inputs[i]
 
-    print("activation: ", activation)
     return activation
 
 # sigmoid transfer function
@@ -89,7 +84,7 @@ def backward_propagate_error(network, expected):
                     print()
                     # for each neuron in the next layer (we call it x[j]).
                     # get the weight for the neuron of the preceding layer (y[j]), 
-                    # multiply it by it by delta of neuron in the next layer, and add for all errors.
+                    # multiply it by it by delta of neuron in the next layer, and add for all neurons in the following layer.
                     error += (neuron['weights'][j] * neuron['delta'])
                 # append the error for neuron x[j] in our layer.
                 errors.append(error)
@@ -105,51 +100,41 @@ def backward_propagate_error(network, expected):
         for j in range(len(layer)):
             neuron = layer[j]
             # for each neuron in the
-            # add a delta (expected-output) * derivative(output) component to the neuron
+            # add a delta error * derivative(output) component to the neuron
             neuron['delta'] = errors[j] * \
                 transfer_relu_derivative(neuron['output'])
+    return network
 
-    print(network)
 
+# a dictionary is a neuron.
+# a list is a layer.
+# test backpropagation of error
 
 # test forward propagation
 network = [
     [
         # neuron 0 with weight for activation 1, activation 2 and bias
         # hidden layer with 2 weights and bias
-        {'output': 0.45244118830604996, 'weights': [0.13436424411240122,
+        {'weights': [0.13436424411240122,
                      0.8474337369372327, 0.763774618976614]},
         # neuron 1 with weight for input 1, input 2, and bias
-        {'output': 0.2878519452596138,'weights': [0.135335283237,
+        {'weights': [0.135335283237,
                      0.0497870683679, 0.763774618976614]}
     ],  # these produce two activations.
     [
         # output 0 with weight for activation 1, activation 2, and bias.
         # output layer 1 with one weight and bias.
-        {'output': 0.6213859615555266,'weights': [0.2550690257394217,
+        {'weights': [0.2550690257394217,
                      0.272531793034, 0.49543508709194095]},
         # output 1 with weight for activation 1, activation 2, and bias.
         # output layer 2 with one weight and bias.
-        {'output': 0.7655499045238336 ,'weights': [0.4494910647887381,
+        {'weights': [0.4494910647887381,
                      0.0301973834223, 0.651592972722763]}
     ]
 ]
 
 row = [1, 0]
-output = forward_propagate(network, row)
-print(output)
-print()
-
-
-# a dictionary is a neuron.
-# a list is a layer.
-# test backpropagation of error
-network_backprop = [ [{'output': 0.7105668883115941, 'weights': [
-        0.13436424411240122, 0.8474337369372327, 0.763774618976614]}
-    ],
-    [{'output': 0.6213859615555266, 'weights': [0.2550690257394217, 0.49543508709194095]},
-     {'output': 0.6573693455986976, 'weights': [
-         0.4494910647887381, 0.651592972722763]}
-     ]]
+forward_propagate(network, row)
 expected = [0, 1]
-backward_propagate_error(network, expected)
+output = backward_propagate_error(network, expected)
+print(output)
