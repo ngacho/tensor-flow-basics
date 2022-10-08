@@ -28,8 +28,8 @@ There're 201 records and 7 numerical input variables. It is a classification pro
 ## Tutorial
 1. [Initialize Network](#initialize-network)
 2. [Forward Propagate](#forward-propagate)
-3. Back Propagate Error
-4. Train Network
+3. [Back Propagate Error](#error-backpropagation)
+4. [Train Network](#train-network)
 5. Predict
 6. Seeds Dataset case study.
 
@@ -223,3 +223,39 @@ This procedure goes on backwards until we calculate a delta for each neuron in e
 
 ## Train Network.
 
+We train a network using a stochastic gradient descent.
+
+This involves multiple iterations of exposing a training dataset to the network for each row of the data, forward propagating the inputs, backpropagating the error, and updating the network weights.
+
+We can break this down into two sections:
+1. Updating the Weights
+2. Training Network
+
+### Updating the weights.
+Once deltas are calculated for each neuron in the network via the back propagation method above, we can use them to update weights.
+
+Networks are updated as follows:
+
+```
+weight = weight - learning_rate * delta * input
+```
+
+Where weight is the given weight, learning_rate is a parameter we must specify, delta is the delta calculated by the back propagation procedure for the neuron, and the input is the input value that caused the error.
+
+The same procedure can be used for updating the bias weight, except there's no input term but a fixed input value of 1.
+
+The learning rate controls how much to change the weight to correct for the error. For example, a value of 0.1 will update the weight 10% of the amount that it possibly could be updated. Small learning rates are preferred as they have a slower learning over  a large number of training iterations. This increases the likelihood of the network finding a good set of weights across all layers rather tha the fastest set of weights that minimize the error (called premature convergence).
+
+Below is a function that updates the weights for the network given an input row of data, a learning rate, and assumes forward and backpropagation have already been performed.
+
+```
+def update_weights(network, row, l_rate):
+    for i in range(len(network)):
+        inputs = row[:-1]
+        if i != 0:
+            inputs  = [neuron['output']] for neuron in network[i-1]]
+        for neuron in network[i]:
+            for j in range(len(inputs)):
+                neuron['weights'] -= l_rate * neuron['delta'] * inputs[j]
+        neuron['weigts'][-1] -= l_rate * neuron['delta']
+```
