@@ -316,3 +316,13 @@ def train_network(network, train, l_rate, n_epoch, n_outputs):
 ```
 
 ## Predict
+Making predictions with a trained network isn't that hard.
+
+Below is a function called predict() that implements the procedure. 
+It returns the index in the output with the largest probability.
+
+```
+def predict(network, row):
+	outputs = forward_propagate(network, row)
+	return outputs.index(max(outputs))
+```

@@ -51,6 +51,11 @@ def transfer_relu_derivative(output):
     elif output > 0:
         return 1
 
+# Calculate the derivative of an neuron output
+def transfer_sigmoid_derivative(output):
+	return output * (1.0 - output)
+ 
+
 
 # forward propagate input to a network output
 def forward_propagate(network, row):
@@ -64,7 +69,7 @@ def forward_propagate(network, row):
             # calculate activation
             activation = activate(neuron['weights'], inputs)
             # transfer function
-            neuron['output'] = transfer_relu(activation)
+            neuron['output'] = transfer_sigmoid(activation)
             # the ouput
             new_inputs.append(neuron['output'])
         inputs = new_inputs
@@ -101,7 +106,7 @@ def backward_propagate_error(network, expected):
             # for each neuron in the
             # add a delta error * derivative(output) component to the neuron
             neuron['delta'] = errors[j] * \
-                transfer_relu_derivative(neuron['output'])
+                transfer_sigmoid_derivative(neuron['output'])
     return network
 
 def update_weights(network, row, l_rate):
@@ -135,7 +140,13 @@ def train_network(network, train, l_rate, n_epoch, n_outputs):
             sum_error += sum([(expected[i]-outputs[i])**2 for i in range(len(expected))])
             backward_propagate_error(network, expected)
             update_weights(network, row, l_rate)
-            print('>epoch=%d, lrate=%.3f, error=%.3f' % (epoch, l_rate, sum_error))
+        print('>epoch=%d, lrate=%.3f, error=%.3f' % (epoch, l_rate, sum_error))
+
+    return network
+
+def predict(network, row):
+	outputs = forward_propagate(network, row)
+	return outputs.index(max(outputs))
 
 seed(1)
 dataset = [[2.7810836,2.550537003,0],
@@ -154,42 +165,12 @@ n_inputs = len(dataset[0]) - 1
 # unique expected values
 n_outputs = len(set([row[-1] for row in dataset]))
 
-network = initialize_network(n_inputs, 2, n_outputs)
-train_network(network, dataset, 0.2, 100, n_outputs)
-for layer in network:
-    print(layer)
+network = initialize_network(n_inputs, 5, n_outputs)
+trained_network = train_network(network, dataset, 0.3, 10, n_outputs)
 
+# network = [[{'weights': [-1.482313569067226, 1.8308790073202204, 1.078381922048799]}, {'weights': [0.23244990332399884, 0.3621998343835864, 0.40289821191094327]}],
+# 	[{'weights': [2.5001872433501404, 0.7887233511355132, -1.1026649757805829]}, {'weights': [-2.429350576245497, 0.8357651039198697, 1.0699217181280656]}]]
 
-# a dictionary is a neuron.
-# a list is a layer.
-# test backpropagation of error
-
-# test forward propagation
-network = [
-    [
-        # neuron 0 with weight for input 1, input 2 and bias
-        # hidden layer with 2 weights and bias
-        {'weights': [0.13436424411240122,
-                     0.8474337369372327, 0.763774618976614]},
-        # neuron 1 with weight for input 1, input 2, and bias
-        {'weights': [0.28336031825041996,
-                     0.5324903031521888, 0.6686880836411714]}
-    ],  # these produce two activations.
-    [
-        # output 0 with weight for input 1, input 2, and bias.
-        # output layer 1 with two weights and bias.
-        {'weights': [0.2550690257394217,
-                     0.272531793034, 0.49543508709194095]},
-        # output 1 with weight for input 1, input 2, and bias.
-        # output layer 2 with two weights and bias.
-        {'weights': [0.4494910647887381,
-                     0.0301973834223, 0.651592972722763]}
-    ]
-]
-
-# row = [1, 0]
-# forward_propagate(network, row)
-# expected = [0, 1]
-# output = backward_propagate_error(network, expected)
-
-# update_weights(output, [0.40194311112253267, 0.5826301365822474, 0.6100814657950934], 0.1)
+for row in dataset:
+    prediction = predict(trained_network, row)
+    print('Expected=%d, Got=%d' % (row[-1], prediction))
