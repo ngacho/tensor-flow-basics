@@ -259,3 +259,27 @@ def update_weights(network, row, l_rate):
                 neuron['weights'] -= l_rate * neuron['delta'] * inputs[j]
         neuron['weigts'][-1] -= l_rate * neuron['delta']
 ```
+
+Continuing with our example from error propagation, we can demonstrate weight updates.
+To update the weights of the last layer, 
+
+Our example had two neurons 1 and 2 in the second last layer, and two neurons x and y in the output layer. We can define the outputs of the neurons of the second last layer as O<sub>1</sub> and O<sub>2</sub>, the outputs of the neurons in the output layer as O<sub>x</sub> and O<sub>y</sub>. The deltas of these layers after back propagation are ∆<sub>x</sub>, ∆<sub>y</sub>, ∆<sub>1</sub>, ∆<sub>2</sub>.
+
+To update the weights: 
+- in the output layer
+
+&emsp;&emsp;&emsp;<sub>x</sub>W<sub>1</sub> -= (O<sub>1</sub> * `l_rate` * ∆<sub>x</sub>)<br>
+&emsp;&emsp;&emsp;<sub>x</sub>W<sub>2</sub> -= (O<sub>2</sub> * `l_rate` * ∆<sub>x</sub>)<br>
+&emsp;&emsp;&emsp; b<sub>x</sub> -= (`l_rate` * ∆<sub>x</sub>)<br>
+
+&emsp;&emsp;&emsp;<sub>y</sub>W<sub>1</sub> -= (O<sub>1</sub> * `l_rate` * ∆<sub>y</sub>)<br>
+&emsp;&emsp;&emsp;<sub>y</sub>W<sub>2</sub> -= (O<sub>2</sub> * `l_rate` * ∆<sub>y</sub>)<br>
+&emsp;&emsp;&emsp; b<sub>y</sub> -= (`l_rate` * ∆<sub>y</sub>)<br>
+
+where O<sub>1</sub> and O<sub>2</sub> are inputs of the last layer
+
+
+
+
+
+### Train Network.

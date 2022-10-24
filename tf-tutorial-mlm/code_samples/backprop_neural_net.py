@@ -46,7 +46,7 @@ def transfer_relu(activation):
 
 
 def transfer_relu_derivative(output):
-    if output < 0:
+    if output <= 0:
         return 0
     elif output > 0:
         return 1
@@ -81,7 +81,6 @@ def backward_propagate_error(network, expected):
                 # for each layer
                 error = 0.0
                 for neuron in network[i+1]:
-                    print()
                     # for each neuron in the next layer (we call it x[j]).
                     # get the weight for the neuron of the preceding layer (y[j]), 
                     # multiply it by it by delta of neuron in the next layer, and add for all neurons in the following layer.
@@ -105,6 +104,27 @@ def backward_propagate_error(network, expected):
                 transfer_relu_derivative(neuron['output'])
     return network
 
+def update_weights(network, row, l_rate):
+    
+    # for each item in network list
+    for i in range(len(network)):
+        # Assume the row is passed with a bias term. 
+        # to get the inputs, get everything that's been passed except the last element (bias).
+        # this is for our first layer
+        inputs = row[:-1]
+        if i != 0:
+            # if it's not the first network, switch inputs to the outputs of the prev layer.
+            inputs = [neuron['output'] for neuron in network[i-1]]
+            
+        # for each neuron in network,
+        # decrement the weight by l_rate * delta of that neuron * input corresponding to that weight.
+        for neuron in network[i]:
+            for j in range(len(inputs)):
+                # update the weights.
+                neuron['weights'][j] -= l_rate * neuron['delta'] * inputs[j]
+            # decrement the bias by l_rate * delta.
+            neuron['weights'][-1] -= l_rate * neuron['delta']
+
 
 # a dictionary is a neuron.
 # a list is a layer.
@@ -113,21 +133,21 @@ def backward_propagate_error(network, expected):
 # test forward propagation
 network = [
     [
-        # neuron 0 with weight for activation 1, activation 2 and bias
+        # neuron 0 with weight for input 1, input 2 and bias
         # hidden layer with 2 weights and bias
         {'weights': [0.13436424411240122,
                      0.8474337369372327, 0.763774618976614]},
         # neuron 1 with weight for input 1, input 2, and bias
-        {'weights': [0.135335283237,
-                     0.0497870683679, 0.763774618976614]}
+        {'weights': [0.28336031825041996,
+                     0.5324903031521888, 0.6686880836411714]}
     ],  # these produce two activations.
     [
-        # output 0 with weight for activation 1, activation 2, and bias.
-        # output layer 1 with one weight and bias.
+        # output 0 with weight for input 1, input 2, and bias.
+        # output layer 1 with two weights and bias.
         {'weights': [0.2550690257394217,
                      0.272531793034, 0.49543508709194095]},
-        # output 1 with weight for activation 1, activation 2, and bias.
-        # output layer 2 with one weight and bias.
+        # output 1 with weight for input 1, input 2, and bias.
+        # output layer 2 with two weights and bias.
         {'weights': [0.4494910647887381,
                      0.0301973834223, 0.651592972722763]}
     ]
@@ -137,4 +157,5 @@ row = [1, 0]
 forward_propagate(network, row)
 expected = [0, 1]
 output = backward_propagate_error(network, expected)
-print(output)
+
+update_weights(output, [0.40194311112253267, 0.5826301365822474, 0.6100814657950934], 0.1)
