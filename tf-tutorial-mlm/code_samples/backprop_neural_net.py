@@ -125,6 +125,40 @@ def update_weights(network, row, l_rate):
             # decrement the bias by l_rate * delta.
             neuron['weights'][-1] -= l_rate * neuron['delta']
 
+def train_network(network, train, l_rate, n_epoch, n_outputs):
+    for epoch in range(n_epoch):
+        sum_error = 0
+        for row in train:
+            outputs = forward_propagate(network, row)
+            expected = [0 for i in range(n_outputs)]
+            expected[row[-1]] = 1
+            sum_error += sum([(expected[i]-outputs[i])**2 for i in range(len(expected))])
+            backward_propagate_error(network, expected)
+            update_weights(network, row, l_rate)
+            print('>epoch=%d, lrate=%.3f, error=%.3f' % (epoch, l_rate, sum_error))
+
+seed(1)
+dataset = [[2.7810836,2.550537003,0],
+	[1.465489372,2.362125076,0],
+	[3.396561688,4.400293529,0],
+	[1.38807019,1.850220317,0],
+	[3.06407232,3.005305973,0],
+	[7.627531214,2.759262235,1],
+	[5.332441248,2.088626775,1],
+	[6.922596716,1.77106367,1],
+	[8.675418651,-0.242068655,1],
+	[7.673756466,3.508563011,1]]
+
+# inputs per data set without the expected value
+n_inputs = len(dataset[0]) - 1
+# unique expected values
+n_outputs = len(set([row[-1] for row in dataset]))
+
+network = initialize_network(n_inputs, 2, n_outputs)
+train_network(network, dataset, 0.2, 100, n_outputs)
+for layer in network:
+    print(layer)
+
 
 # a dictionary is a neuron.
 # a list is a layer.
@@ -153,9 +187,9 @@ network = [
     ]
 ]
 
-row = [1, 0]
-forward_propagate(network, row)
-expected = [0, 1]
-output = backward_propagate_error(network, expected)
+# row = [1, 0]
+# forward_propagate(network, row)
+# expected = [0, 1]
+# output = backward_propagate_error(network, expected)
 
-update_weights(output, [0.40194311112253267, 0.5826301365822474, 0.6100814657950934], 0.1)
+# update_weights(output, [0.40194311112253267, 0.5826301365822474, 0.6100814657950934], 0.1)

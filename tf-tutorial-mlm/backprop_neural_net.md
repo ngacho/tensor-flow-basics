@@ -228,8 +228,8 @@ We train a network using a stochastic gradient descent.
 This involves multiple iterations of exposing a training dataset to the network for each row of the data, forward propagating the inputs, backpropagating the error, and updating the network weights.
 
 We can break this down into two sections:
-1. Updating the Weights
-2. Training Network
+1. [Updating the Weights](#updating-the-weights)
+2. [Training Network](#train-network)
 
 ### Updating the weights.
 Once deltas are calculated for each neuron in the network via the back propagation method above, we can use them to update weights.
@@ -287,10 +287,32 @@ To update the weights:
 &emsp;&emsp;&emsp;<sub>y</sub>W<sub>2</sub> -= (O<sub>2</sub> · `l_rate` · ∆<sub>y</sub>)<br>
 &emsp;&emsp;&emsp; b<sub>y</sub> -= (`l_rate` · ∆<sub>y</sub>)<br>
 
-where O<sub>1</sub> and O<sub>2</sub> are inputs of the last layer
-
-
-
-
+where O<sub>1</sub> and O<sub>2</sub> are inputs to the last layer
 
 ### Train Network.
+
+The network is trained using a stochastic gradient descent. This involves looping for a fixed number of epochs, 
+and within each epoch updating the network for each row in the training dataset.
+
+Because updates are made for each training pattern, this type of learning is called 
+online learning.
+If errors were accumulated across an epoch before updating the weights, it would've been called 
+batch learning or batch gradient descent.
+
+We could train a network given a training daaset, a learning rate, a fixed num of epochs and an expected num of output values
+
+```
+def train_network(network, train, l_rate, n_epoch, n_outputs):
+    for epoch in range(n_epoch):
+        sum_error += 0
+        for row in train:
+            outputs = forward_propagation(network, row)
+            expected = [0 for i in range(n_outputs)]
+            expected[row[-1]] = 1
+            sum_error += sum([expected[i]-outputs[i]])**2 for i in range(len(expected))])
+            backward_propagate_error(network, expected)
+            update_weights(network, row, l_rate)
+            print('>epoch=%d, lrate=%.3f, error=%.3f' % (epoch, l_rate, sum_error))
+```
+
+## Predict
