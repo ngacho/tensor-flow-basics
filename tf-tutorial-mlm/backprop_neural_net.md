@@ -250,14 +250,25 @@ Below is a function that updates the weights for the network given an input row 
 
 ```
 def update_weights(network, row, l_rate):
+    
+    # for each item in network list
     for i in range(len(network)):
+        # Assume the row is passed with a bias term. 
+        # to get the inputs, get everything that's been passed except the last element (bias).
+        # this is for our first layer
         inputs = row[:-1]
         if i != 0:
-            inputs  = [neuron['output']] for neuron in network[i-1]]
+            # if it's not the first network, switch inputs to the outputs of the prev layer.
+            inputs = [neuron['output'] for neuron in network[i-1]]
+            
+        # for each neuron in network,
+        # decrement the weight by l_rate * delta of that neuron * input corresponding to that weight.
         for neuron in network[i]:
             for j in range(len(inputs)):
-                neuron['weights'] -= l_rate * neuron['delta'] * inputs[j]
-        neuron['weigts'][-1] -= l_rate * neuron['delta']
+                # update the weights.
+                neuron['weights'][j] -= l_rate * neuron['delta'] * inputs[j]
+            # decrement the bias by l_rate * delta.
+            neuron['weights'][-1] -= l_rate * neuron['delta']
 ```
 
 Continuing with our example from error propagation, we can demonstrate weight updates.
