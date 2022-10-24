@@ -279,13 +279,13 @@ Our example had two neurons 1 and 2 in the second last layer, and two neurons x 
 To update the weights: 
 - in the output layer
 
-&emsp;&emsp;&emsp;<sub>x</sub>W<sub>1</sub> -= (O<sub>1</sub> * `l_rate` * ∆<sub>x</sub>)<br>
-&emsp;&emsp;&emsp;<sub>x</sub>W<sub>2</sub> -= (O<sub>2</sub> * `l_rate` * ∆<sub>x</sub>)<br>
-&emsp;&emsp;&emsp; b<sub>x</sub> -= (`l_rate` * ∆<sub>x</sub>)<br>
+&emsp;&emsp;&emsp;<sub>x</sub>W<sub>1</sub> -= (O<sub>1</sub> · `l_rate` · ∆<sub>x</sub>)<br>
+&emsp;&emsp;&emsp;<sub>x</sub>W<sub>2</sub> -= (O<sub>2</sub> · `l_rate` · ∆<sub>x</sub>)<br>
+&emsp;&emsp;&emsp; b<sub>x</sub> -= (`l_rate` · ∆<sub>x</sub>)<br>
 
-&emsp;&emsp;&emsp;<sub>y</sub>W<sub>1</sub> -= (O<sub>1</sub> * `l_rate` * ∆<sub>y</sub>)<br>
-&emsp;&emsp;&emsp;<sub>y</sub>W<sub>2</sub> -= (O<sub>2</sub> * `l_rate` * ∆<sub>y</sub>)<br>
-&emsp;&emsp;&emsp; b<sub>y</sub> -= (`l_rate` * ∆<sub>y</sub>)<br>
+&emsp;&emsp;&emsp;<sub>y</sub>W<sub>1</sub> -= (O<sub>1</sub> · `l_rate` · ∆<sub>y</sub>)<br>
+&emsp;&emsp;&emsp;<sub>y</sub>W<sub>2</sub> -= (O<sub>2</sub> · `l_rate` · ∆<sub>y</sub>)<br>
+&emsp;&emsp;&emsp; b<sub>y</sub> -= (`l_rate` · ∆<sub>y</sub>)<br>
 
 where O<sub>1</sub> and O<sub>2</sub> are inputs of the last layer
 
